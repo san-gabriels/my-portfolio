@@ -1,0 +1,271 @@
+/* ==========================================================================
+   1. COLOR PALETTE (Strict Requirements)
+   ========================================================================== */
+:root {
+  --col-primary: #004347;    /* Deep Teal (Background) */
+  --col-secondary: #008c95;  /* Lighter Teal (Accents) */
+  --col-accent: #e85d00;     /* Orange (Highlights/CTA) */
+  --col-text-dark: #444440;
+  --col-text-light: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.1); /* For Glassmorphism */
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--col-text-light);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--col-primary);
+}
+
+/* ==========================================================================
+   3. DECORATIVE ELEMENTS (Glass Hexagons Grid)
+   ========================================================================== */
+.background-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* The glassmorphism wrapper */
+.hex-bg {
+  position: absolute;
+  width: clamp(100px, 20vw, 250px);
+  /* The height of a hexagon with flat top is approx 0.866 of width */
+  aspect-ratio: 100 / 86.6;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  clip-path: url(#rounded-hex-clip);
+}
+
+.hex-bg svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Artistic scattering of the hexagons */
+.h-1 { top: 10%; left: 10%; width: 150px; }
+.h-2 { top: 60%; left: 80%; width: 220px; }
+.h-3 { top: 30%; left: 60%; width: 120px; }
+.h-4 { top: 80%; left: 20%; width: 180px; }
+.h-5 { top: -5%; left: 45%; width: 200px; }
+
+
+/* ==========================================================================
+   4. LAYOUT & NAVIGATION (Mobile First)
+   ========================================================================== */
+
+/* Layout Wrapper uses flex to put nav on left, content on right */
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Vertical Navigation (Mobile: Collapsed, icons only) */
+.side-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 60px; /* Collapsed width */
+  flex-shrink: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+  transition: width 0.3s ease;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0;
+}
+
+.nav-links li {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  color: var(--col-text-light);
+  text-decoration: none;
+  font-size: 1.5rem; /* Icon size */
+  transition: color 0.3s ease;
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0;
+  justify-content: center;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--col-accent);
+}
+
+.nav-links .text {
+  display: none; /* Hide text on mobile */
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+/* Main Content Area */
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   5. HERO SECTION
+   ========================================================================== */
+.hero-section {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* Visual Anchor: Large Central Hexagon */
+.hero-anchor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  aspect-ratio: 100 / 86.6;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  clip-path: url(#rounded-hex-clip);
+  z-index: 0;
+  display: flex;
+}
+
+.hero-anchor svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1; /* Stay above the hero anchor */
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: var(--col-secondary);
+  margin-bottom: 2rem;
+}
+
+/* Call to Action Button */
+.btn-cta {
+  display: inline-block;
+  background-color: var(--col-accent);
+  color: var(--col-text-light);
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px; /* Could use hexagon clip-path for button too, but instructions didn't specify, standard pill/rounded rect is fine */
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-cta:hover {
+  background-color: transparent;
+  color: var(--col-accent);
+  border-color: var(--col-accent);
+  transform: translateY(-2px);
+}
+
+
+/* ==========================================================================
+   6. DESKTOP MEDIA QUERIES (min-width: 768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+
+  /* Expand Sidebar */
+  .side-nav {
+    width: 250px; /* Fixed width sidebar */
+    justify-content: flex-start;
+    padding-top: 5rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+
+  .nav-links li {
+    justify-content: flex-start;
+  }
+
+  .nav-links a {
+    justify-content: flex-start;
+    padding: 0.8rem 2rem;
+  }
+
+  .nav-links .text {
+    display: inline-block; /* Show text on desktop */
+  }
+
+  /* Larger hero elements */
+  .hero-anchor {
+    width: 450px;
+  }
+
+  .hero-content h1 {
+    font-size: 4rem;
+  }
+
+  .hero-content p {
+    font-size: 1.5rem;
+  }
+}
