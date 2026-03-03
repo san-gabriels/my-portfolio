@@ -50,79 +50,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Responsive GSAP ScrollTrigger setup
-  // Only pin on desktop (min-width: 768px)
-
-  mm.add("(min-width: 768px)", () => {
-    // Pin the left column while scrolling the right column
-    ScrollTrigger.create({
-      trigger: ".projects-section",
+  // Hexagon "Hive" Animation
+  gsap.to(".hex-bg", {
+    scrollTrigger: {
+      trigger: ".hero-section",
       start: "top top",
-      end: "bottom bottom",
-      pin: ".projects-left",
-      pinSpacing: false
-    });
-
-    // Animate active state of project info based on scrolling cards
-    const cards = gsap.utils.toArray(".project-card");
-    const infos = gsap.utils.toArray(".project-info");
-
-    // Hide all infos initially
-    gsap.set(infos, { autoAlpha: 0, y: 20 });
-
-    // Show the first one immediately if present
-    if (infos[0]) {
-      gsap.to(infos[0], { autoAlpha: 1, y: 0, duration: 0.5 });
-      infos[0].classList.add("active");
-    }
-
-    let currentIndex = 0;
-
-    cards.forEach((card, i) => {
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top center", // when the top of the card hits the center of the viewport
-        end: "bottom center", // when the bottom of the card hits the center of the viewport
-        onEnter: () => setActive(i),
-        onEnterBack: () => setActive(i)
-      });
-    });
-
-    function setActive(index) {
-      if (index === currentIndex) return; // Prevent redundant animations
-
-      const previousIndex = currentIndex;
-      currentIndex = index;
-
-      // Animate out previous
-      if (infos[previousIndex]) {
-        gsap.to(infos[previousIndex], { autoAlpha: 0, y: -20, duration: 0.4, onComplete: () => {
-          infos[previousIndex].classList.remove("active");
-        }});
-      }
-
-      // Animate in current
-      if (infos[currentIndex]) {
-        // Reset position before animating in (so it comes from below)
-        gsap.set(infos[currentIndex], { y: 20 });
-        gsap.to(infos[currentIndex], { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.2 });
-        infos[currentIndex].classList.add("active");
-      }
-    }
-
-    return () => {
-      // cleanup on teardown
-    };
+      end: "bottom top",
+      scrub: 1 // smooth scrubbing
+    },
+    x: () => -window.innerWidth * 0.5,
+    y: () => -window.innerHeight * 0.5,
+    opacity: 0,
+    stagger: 0.05,
+    ease: "power2.inOut"
   });
 
-  // For Mobile (No Pinning, but we can still highlight active projects if we want)
-  mm.add("(max-width: 767px)", () => {
-    // Optional: simple active state toggling for mobile if desired
-    // For now, we'll let CSS handle the flow naturally without pinning.
-    const cards = gsap.utils.toArray(".project-card");
-    const infos = gsap.utils.toArray(".project-info");
-
-    // Add active to all by default or let them just be visible
-    infos.forEach(info => info.classList.add("active"));
+  // Full Screen Snapping for Projects
+  ScrollTrigger.create({
+    trigger: ".projects-section",
+    start: "top top",
+    end: "bottom bottom",
+    snap: {
+      snapTo: 1 / (document.querySelectorAll(".project-container").length - 1),
+      duration: {min: 0.2, max: 0.5},
+      delay: 0.1,
+      ease: "power1.inOut"
+    }
   });
+
 });
