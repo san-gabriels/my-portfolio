@@ -2,13 +2,13 @@
    1. COLOR PALETTE (Strict Requirements)
    ========================================================================== */
 :root {
-  --col-primary: #011c1e;    /* Very Dark Petrol/Black (Background) */
+  --col-primary: #01191b;    /* Deepest Petrol/Black (Background) */
   --col-secondary: #004347;  /* Deep Teal (Card/Element Backgrounds) */
   --col-accent: #e85d00;     /* Orange (Highlights/CTA) */
-  --col-text-dark: #e0e0e0;  /* Body text */
-  --col-text-light: #ffffff; /* Headings */
-  --glass-bg: rgba(0, 67, 71, 0.5); /* For Glassmorphism on Deep Teal */
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --col-text-dark: #cccccc;  /* Body text (Light Grey) */
+  --col-text-light: #ffffff; /* Headings (White) */
+  --glass-bg: rgba(255, 255, 255, 0.03); /* Glassmorphism background */
+  --glass-border: rgba(255, 255, 255, 0.1); /* Glassmorphism border */
 }
 
 /* ==========================================================================
@@ -41,25 +41,26 @@ body {
    ========================================================================== */
 .background-grid {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* The glassmorphism wrapper */
+/* Outline-only hexagon wrapper */
 .hex-bg {
   position: absolute;
-  width: clamp(100px, 20vw, 250px);
+  width: 250px;
   /* The height of a hexagon with flat top is approx 0.866 of width */
   aspect-ratio: 100 / 86.6;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   clip-path: url(#rounded-hex-clip);
+  transition: transform 0.5s ease;
 }
 
 .hex-bg svg {
@@ -71,12 +72,12 @@ body {
   pointer-events: none;
 }
 
-/* Artistic scattering of the hexagons */
-.h-1 { top: 10%; left: 10%; width: 150px; }
-.h-2 { top: 60%; left: 80%; width: 220px; }
-.h-3 { top: 30%; left: 60%; width: 120px; }
-.h-4 { top: 80%; left: 20%; width: 180px; }
-.h-5 { top: -5%; left: 45%; width: 200px; }
+/* "Hive" grouping of the hexagons in the center */
+.h-1 { transform: translate(0, 0); width: 300px; }
+.h-2 { transform: translate(-150px, -130px); width: 200px; }
+.h-3 { transform: translate(150px, -130px); width: 200px; }
+.h-4 { transform: translate(-150px, 130px); width: 200px; }
+.h-5 { transform: translate(150px, 130px); width: 200px; }
 
 
 /* ==========================================================================
@@ -102,69 +103,68 @@ body {
   top: 2rem;
   right: 2rem;
   z-index: 100;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0;
   outline: none;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.menu-toggle:hover {
-  border-color: var(--col-secondary);
-}
-
-/* Hamburger Lines */
+/* Hamburger Vertical Lines */
 .hamburger-box {
-  width: 30px;
+  width: 24px;
   height: 24px;
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
 }
 
 .hamburger-inner {
   display: block;
-  top: 50%;
-  margin-top: -2px;
-}
-
-.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
-  width: 30px;
-  height: 2px;
+  width: 2px;
+  height: 100%;
   background-color: var(--col-text-light);
+  transition: transform 0.3s ease, opacity 0.3s ease;
   position: absolute;
-  transition-property: transform;
-  transition-duration: 0.15s;
-  transition-timing-function: ease;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .hamburger-inner::before, .hamburger-inner::after {
   content: "";
   display: block;
+  width: 2px;
+  height: 100%;
+  background-color: var(--col-text-light);
+  position: absolute;
+  transition: transform 0.3s ease;
 }
 
-.hamburger-inner::before { top: -10px; }
-.hamburger-inner::after { bottom: -10px; }
+.hamburger-inner::before {
+  left: -8px;
+}
+
+.hamburger-inner::after {
+  left: 8px;
+}
 
 /* Active (Close Icon) State */
 .menu-toggle.is-active .hamburger-inner {
-  transform: rotate(45deg);
+  background-color: transparent;
 }
+
 .menu-toggle.is-active .hamburger-inner::before {
-  top: 0;
-  opacity: 0;
+  transform: translateX(8px) rotate(45deg);
 }
+
 .menu-toggle.is-active .hamburger-inner::after {
-  bottom: 0;
-  transform: rotate(-90deg);
+  transform: translateX(-8px) rotate(-45deg);
 }
 
 /* Overlay Menu */
@@ -270,7 +270,7 @@ body {
   letter-spacing: 1px;
 }
 
-.hero-content p {
+.hero-content h2 {
   font-size: 1.2rem;
   color: var(--col-secondary);
   margin-bottom: 2rem;
@@ -298,113 +298,152 @@ body {
 
 
 /* ==========================================================================
-   6. PROJECTS SECTION (SPLIT SCREEN)
+   6. PROJECTS SECTION (FULL SCREEN CARDS)
    ========================================================================== */
 .projects-section {
   display: flex;
   flex-direction: column;
-  padding: 4rem 2rem;
-  gap: 3rem;
-  position: relative;
-}
-
-.projects-left {
-  position: relative;
   width: 100%;
 }
 
-.projects-left h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--col-text-light);
-  opacity: 0.8;
+.project-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
-.project-info-container {
+.project-card-glass {
+  width: 100%;
+  max-width: 1200px;
+  height: 85vh;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
 }
 
-.project-info {
-  opacity: 0.5;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateY(10px);
+.project-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
   margin-bottom: 2rem;
+  z-index: 2;
 }
 
-.project-info.active {
-  opacity: 1;
-  transform: translateY(0);
+.project-counter {
+  display: flex;
+  align-items: center;
 }
 
-.project-number {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--col-accent);
-  display: block;
-  margin-bottom: 0.5rem;
+.counter-circle {
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.project-info h3 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+.counter-label {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--col-text-dark);
+  margin-bottom: 0.2rem;
+}
+
+.counter-numbers {
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--col-text-light);
 }
 
-.project-info p {
-  font-size: 1rem;
-  color: var(--col-text-dark);
-  line-height: 1.6;
+.project-type {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: var(--col-text-light);
+  padding-top: 1rem;
+}
+
+.project-main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.project-info-side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  margin-bottom: 2rem;
+}
+
+.project-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
   margin-bottom: 1rem;
+  color: var(--col-text-light);
 }
 
 .tech-stack {
   font-size: 0.9rem;
-  color: var(--col-accent);
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
-.projects-right {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-}
-
-.project-card {
-  height: 300px;
-  background: var(--col-secondary);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  letter-spacing: 2px;
   color: var(--col-text-light);
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--col-accent);
+.project-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--col-text-dark);
+  margin-bottom: 2rem;
+  max-width: 90%;
 }
 
-.card-content {
-  text-align: center;
-  padding: 1rem;
-  background: var(--glass-bg);
+.visit-site-link {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: var(--col-text-light);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+  align-self: flex-start;
+}
+
+.visit-site-link:hover {
+  color: var(--col-accent);
+}
+
+.project-preview-side {
   width: 100%;
-  height: 100%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
 }
 
 /* ==========================================================================
@@ -426,53 +465,48 @@ body {
     font-size: 4rem;
   }
 
-  .hero-content p {
+  .hero-content h2 {
     font-size: 1.5rem;
+    color: var(--col-secondary);
+    margin-bottom: 2rem;
   }
 
-  /* Projects Split Screen Pinning */
-  .projects-section {
+  /* Full Screen Cards Desktop */
+  .project-card-glass {
+    padding: 4rem;
+  }
+
+  .project-top-bar {
+    margin-bottom: 0;
+  }
+
+  .project-main-content {
     flex-direction: row;
-    align-items: flex-start;
-    padding: 8rem 4rem; /* More padding on desktop */
-    gap: 0;
+    align-items: center;
   }
 
-  .projects-left {
-    width: 50%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .project-info-side {
+    width: 45%;
     padding-right: 4rem;
+    margin-bottom: 0;
   }
 
-  .projects-left h2 {
-    font-size: 3rem;
+  .project-title {
+    font-size: 5rem;
   }
 
-  .project-info {
-    margin-bottom: 3rem;
+  .project-preview-side {
+    width: 55%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 0;
+    border-radius: 0 30px 30px 0;
   }
 
-  .project-info h3 {
-    font-size: 3rem;
-  }
-
-  .project-info p {
-    font-size: 1.2rem;
-  }
-
-  .projects-right {
-    width: 50%;
-    /* Allow scrolling over the cards: add padding to top/bottom so first/last cards align well while scrolling */
-    padding-top: 50vh;
-    padding-bottom: 50vh;
-    gap: 4rem;
-  }
-
-  .project-card {
-    height: 600px;
-    font-size: 2rem;
+  /* Give the text an overlapping feel by putting it on top */
+  .project-info-side {
+    z-index: 2;
   }
 }
