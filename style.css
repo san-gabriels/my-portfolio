@@ -2,13 +2,13 @@
    1. COLOR PALETTE (Strict Requirements)
    ========================================================================== */
 :root {
-  --col-primary: #004347;    /* Deep Teal (Background) */
-  --col-secondary: #008c95;  /* Lighter Teal (Accents) */
+  --col-primary: #011c1e;    /* Very Dark Petrol/Black (Background) */
+  --col-secondary: #004347;  /* Deep Teal (Card/Element Backgrounds) */
   --col-accent: #e85d00;     /* Orange (Highlights/CTA) */
-  --col-text-dark: #444440;
-  --col-text-light: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.1); /* For Glassmorphism */
-  --glass-border: rgba(255, 255, 255, 0.2);
+  --col-text-dark: #e0e0e0;  /* Body text */
+  --col-text-light: #ffffff; /* Headings */
+  --glass-bg: rgba(0, 67, 71, 0.5); /* For Glassmorphism on Deep Teal */
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 /* ==========================================================================
@@ -22,10 +22,14 @@
 
 html, body {
   height: 100%;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: var(--col-text-light);
+  font-family: 'Inter', sans-serif;
+  color: var(--col-text-dark);
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--col-text-light);
 }
 
 body {
@@ -76,70 +80,12 @@ body {
 
 
 /* ==========================================================================
-   4. LAYOUT & NAVIGATION (Mobile First)
+   4. LAYOUT & NAVIGATION (Hamburger Menu)
    ========================================================================== */
 
-/* Layout Wrapper uses flex to put nav on left, content on right */
 .layout-wrapper {
   display: flex;
   min-height: 100vh;
-}
-
-/* Vertical Navigation (Mobile: Collapsed, icons only) */
-.side-nav {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 60px; /* Collapsed width */
-  flex-shrink: 0;
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-right: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 10;
-  transition: width 0.3s ease;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 0;
-}
-
-.nav-links li {
-  display: flex;
-  justify-content: center;
-}
-
-.nav-links a {
-  display: flex;
-  align-items: center;
-  color: var(--col-text-light);
-  text-decoration: none;
-  font-size: 1.5rem; /* Icon size */
-  transition: color 0.3s ease;
-  position: relative;
-  width: 100%;
-  padding: 0.5rem 0;
-  justify-content: center;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--col-accent);
-}
-
-.nav-links .text {
-  display: none; /* Hide text on mobile */
-  font-size: 1rem;
-  font-weight: 500;
-  margin-left: 1rem;
-  white-space: nowrap;
 }
 
 /* Main Content Area */
@@ -147,6 +93,130 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+/* Hamburger Toggle Button */
+.menu-toggle {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  outline: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  border-color: var(--col-secondary);
+}
+
+/* Hamburger Lines */
+.hamburger-box {
+  width: 30px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px;
+}
+
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 30px;
+  height: 2px;
+  background-color: var(--col-text-light);
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.hamburger-inner::before, .hamburger-inner::after {
+  content: "";
+  display: block;
+}
+
+.hamburger-inner::before { top: -10px; }
+.hamburger-inner::after { bottom: -10px; }
+
+/* Active (Close Icon) State */
+.menu-toggle.is-active .hamburger-inner {
+  transform: rotate(45deg);
+}
+.menu-toggle.is-active .hamburger-inner::before {
+  top: 0;
+  opacity: 0;
+}
+.menu-toggle.is-active .hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+}
+
+/* Overlay Menu */
+.overlay-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Initial state: Hidden and translated up (Mobile-first animation: slide down) */
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: visibility 0s linear 0.4s;
+}
+
+/* The JavaScript GSAP animation will override these transforms */
+.overlay-menu.is-open {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.overlay-nav {
+  text-align: center;
+}
+
+.overlay-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.overlay-links li a {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--col-text-light);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.overlay-links li a:hover {
+  color: var(--col-accent);
 }
 
 /* ==========================================================================
@@ -246,7 +316,8 @@ body {
 .projects-left h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: var(--col-secondary);
+  color: var(--col-text-light);
+  opacity: 0.8;
 }
 
 .project-info-container {
@@ -258,24 +329,41 @@ body {
 .project-info {
   opacity: 0.5;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateX(-10px);
+  transform: translateY(10px);
+  margin-bottom: 2rem;
 }
 
 .project-info.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
+}
+
+.project-number {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--col-accent);
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .project-info h3 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: var(--col-accent);
+  color: var(--col-text-light);
 }
 
 .project-info p {
   font-size: 1rem;
-  color: var(--col-text-light);
-  line-height: 1.5;
+  color: var(--col-text-dark);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.tech-stack {
+  font-size: 0.9rem;
+  color: var(--col-accent);
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .projects-right {
@@ -287,24 +375,36 @@ body {
 
 .project-card {
   height: 300px;
-  background: var(--glass-bg);
+  background: var(--col-secondary);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--col-text-light);
   font-size: 1.5rem;
   font-weight: bold;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
-  border-color: var(--col-secondary);
+  border-color: var(--col-accent);
+}
+
+.card-content {
+  text-align: center;
+  padding: 1rem;
+  background: var(--glass-bg);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ==========================================================================
@@ -312,28 +412,9 @@ body {
    ========================================================================== */
 @media (min-width: 768px) {
 
-  /* Expand Sidebar */
-  .side-nav {
-    width: 250px; /* Fixed width sidebar */
-    justify-content: flex-start;
-    padding-top: 5rem;
-  }
-
-  .nav-links {
-    gap: 1.5rem;
-  }
-
-  .nav-links li {
-    justify-content: flex-start;
-  }
-
-  .nav-links a {
-    justify-content: flex-start;
-    padding: 0.8rem 2rem;
-  }
-
-  .nav-links .text {
-    display: inline-block; /* Show text on desktop */
+  /* Overlay Menu Desktop (Slide in from Right) */
+  .overlay-menu {
+    transform: translateX(100%);
   }
 
   /* Larger hero elements */
@@ -370,8 +451,12 @@ body {
     font-size: 3rem;
   }
 
+  .project-info {
+    margin-bottom: 3rem;
+  }
+
   .project-info h3 {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   .project-info p {
@@ -387,7 +472,7 @@ body {
   }
 
   .project-card {
-    height: 400px;
+    height: 600px;
     font-size: 2rem;
   }
 }

@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gabriel | Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +21,7 @@
       <!-- Reusable stroke for the border -->
       <g id="hex-stroke">
         <path d="M 95.67 35.80 Q 100.00 43.30 95.67 50.80 L 79.33 79.10 Q 75.00 86.60 66.34 86.60 L 33.66 86.60 Q 25.00 86.60 20.67 79.10 L 4.33 50.80 Q 0.00 43.30 4.33 35.80 L 20.67 7.50 Q 25.00 0.00 33.66 0.00 L 66.34 0.00 Q 75.00 0.00 79.33 7.50 Z"
-              fill="none" stroke="var(--glass-border)" stroke-width="2" vector-effect="non-scaling-stroke" />
+              fill="rgba(255, 255, 255, 0.05)" stroke="var(--glass-border)" stroke-width="2" vector-effect="non-scaling-stroke" />
       </g>
     </defs>
   </svg>
@@ -42,37 +45,26 @@
     </div>
   </div>
 
-  <div class="layout-wrapper">
-    <!-- Vertical Navigation (Left) -->
-    <nav class="side-nav">
-      <ul class="nav-links">
-        <li>
-          <a href="#home" class="active">
-            <span class="icon">🏠</span>
-            <span class="text">Home</span>
-          </a>
-        </li>
-        <li>
-          <a href="#about">
-            <span class="icon">👤</span>
-            <span class="text">About</span>
-          </a>
-        </li>
-        <li>
-          <a href="#projects">
-            <span class="icon">💻</span>
-            <span class="text">Projects</span>
-          </a>
-        </li>
-        <li>
-          <a href="#contact">
-            <span class="icon">✉️</span>
-            <span class="text">Contact</span>
-          </a>
-        </li>
+  <!-- Hamburger Menu Toggle Button -->
+  <button class="menu-toggle" aria-label="Toggle Menu">
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+  </button>
+
+  <!-- Full Screen Overlay Menu -->
+  <div class="overlay-menu">
+    <nav class="overlay-nav">
+      <ul class="overlay-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+  </div>
 
+  <div class="layout-wrapper">
     <!-- Main Content Area -->
     <main class="content-area">
       <section id="home" class="hero-section">
@@ -95,20 +87,22 @@
           <h2>Selected Projects</h2>
           <div class="project-info-container">
             <div class="project-info" id="info-1">
-              <h3>Project Alpha</h3>
-              <p>A cutting-edge glassmorphism web application focusing on user experience and seamless animations.</p>
+              <span class="project-number">01</span>
+              <h3>Job Tracker SaaS</h3>
+              <p>A comprehensive dashboard for job seekers to track applications and interviews.</p>
+              <div class="tech-stack">Python &middot; AI &middot; Vue</div>
             </div>
             <div class="project-info" id="info-2">
-              <h3>Project Beta</h3>
-              <p>E-commerce platform with a mobile-first approach and lightning-fast load times.</p>
+              <span class="project-number">02</span>
+              <h3>Corporate Ecosystem</h3>
+              <p>A multi-site WordPress architecture supporting complex corporate structures.</p>
+              <div class="tech-stack">WordPress &middot; PHP &middot; SCSS</div>
             </div>
             <div class="project-info" id="info-3">
-              <h3>Project Gamma</h3>
-              <p>Interactive data visualization dashboard built with GSAP and deep teal aesthetics.</p>
-            </div>
-            <div class="project-info" id="info-4">
-              <h3>Project Delta</h3>
-              <p>Modern portfolio interface featuring responsive design and complex scroll triggers.</p>
+              <span class="project-number">03</span>
+              <h3>Legacy Rescue</h3>
+              <p>Performance optimization and code refactoring for an aging web platform.</p>
+              <div class="tech-stack">Optimization &middot; JS &middot; Node</div>
             </div>
           </div>
         </div>
@@ -116,16 +110,13 @@
         <!-- Right Column: Scrolling Cards -->
         <div class="projects-right">
           <div class="project-card" id="card-1">
-            <div class="card-content">Alpha Preview</div>
+            <div class="card-content">Job Tracker Preview</div>
           </div>
           <div class="project-card" id="card-2">
-            <div class="card-content">Beta Preview</div>
+            <div class="card-content">Corporate Ecosystem Preview</div>
           </div>
           <div class="project-card" id="card-3">
-            <div class="card-content">Gamma Preview</div>
-          </div>
-          <div class="project-card" id="card-4">
-            <div class="card-content">Delta Preview</div>
+            <div class="card-content">Legacy Rescue Preview</div>
           </div>
         </div>
       </section>
