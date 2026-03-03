@@ -87,8 +87,53 @@
           <a href="#projects" class="btn-cta">View My Work</a>
         </div>
       </section>
+
+      <!-- Projects Section (Split Screen Pinned Scroll) -->
+      <section id="projects" class="projects-section">
+        <!-- Left Column: Pinned Text Info -->
+        <div class="projects-left">
+          <h2>Selected Projects</h2>
+          <div class="project-info-container">
+            <div class="project-info" id="info-1">
+              <h3>Project Alpha</h3>
+              <p>A cutting-edge glassmorphism web application focusing on user experience and seamless animations.</p>
+            </div>
+            <div class="project-info" id="info-2">
+              <h3>Project Beta</h3>
+              <p>E-commerce platform with a mobile-first approach and lightning-fast load times.</p>
+            </div>
+            <div class="project-info" id="info-3">
+              <h3>Project Gamma</h3>
+              <p>Interactive data visualization dashboard built with GSAP and deep teal aesthetics.</p>
+            </div>
+            <div class="project-info" id="info-4">
+              <h3>Project Delta</h3>
+              <p>Modern portfolio interface featuring responsive design and complex scroll triggers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Scrolling Cards -->
+        <div class="projects-right">
+          <div class="project-card" id="card-1">
+            <div class="card-content">Alpha Preview</div>
+          </div>
+          <div class="project-card" id="card-2">
+            <div class="card-content">Beta Preview</div>
+          </div>
+          <div class="project-card" id="card-3">
+            <div class="card-content">Gamma Preview</div>
+          </div>
+          <div class="project-card" id="card-4">
+            <div class="card-content">Delta Preview</div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
