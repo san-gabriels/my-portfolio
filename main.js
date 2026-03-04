@@ -54,6 +54,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hexagon "Hive" Organic Animation
   const honeycomb = document.querySelector('#hexagon-bg');
+  const honeycombGroup = document.querySelector('.honeycomb-cluster g');
+
+  // Dynamically generate ~20 hexagons
+  if (honeycombGroup) {
+    const numHexagons = 20;
+    const hexPathD = "M 103.9 -30.0 L 129.9 -15.0 L 129.9 15.0 L 103.9 30.0 L 77.9 15.0 L 77.9 -15.0 Z";
+    for (let i = 0; i < numHexagons; i++) {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("class", "hex-path");
+      path.setAttribute("d", hexPathD);
+      honeycombGroup.appendChild(path);
+    }
+  }
+
   const hexPaths = document.querySelectorAll('.hex-path');
   if (honeycomb && hexPaths.length > 0) {
     const hexTl = gsap.timeline({
@@ -67,9 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Stagger organic movement for individual hexagons to float fully across the screen
     hexPaths.forEach((path, i) => {
-      // Initial placement: ensure they cover the screen, not just the center
+      // Initial placement: cluster slightly more towards center-left, with some outliers
+      const xOffset = (Math.random() - 0.8) * window.innerWidth * 1.5;
       gsap.set(path, {
-        x: (Math.random() - 0.5) * window.innerWidth * 1.5,
+        x: xOffset,
         y: (Math.random() - 0.5) * window.innerHeight * 1.5,
         scale: 1 + Math.random() * 2,
         opacity: 0.1 + Math.random() * 0.3,
@@ -109,7 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Create glass card
         const glassCard = document.createElement('div');
         glassCard.className = 'project-card glass-card';
-        glassCard.style.zIndex = i + 1; // Explicit stacking for card
+        // Assign strictly increasing Z-Indices: Card 1: z-index: 1, Card 2: z-index: 2, etc.
+        glassCard.style.zIndex = i + 1;
 
         // HTML for fixed elements
         // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
@@ -150,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="project-description" style="opacity: 0; transform: translateX(-30px);">${proj.description}</p>
               <a href="${proj.link}" class="visit-site-link" style="opacity: 0; transform: translateY(20px);">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
             </div>
-            <div class="project-preview-side" style="opacity: 0; transform: scale(0.95);">
+            <div class="project-preview" style="opacity: 0; transform: scale(0.95);">
                ${proj.image}
             </div>
           </div>
@@ -173,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const techItems = card.querySelectorAll('.tech-item, .tech-bullet');
         const desc = card.querySelector('.project-description');
         const link = card.querySelector('.visit-site-link');
-        const preview = card.querySelector('.project-preview-side');
+        const preview = card.querySelector('.project-preview');
 
         // Build Entrance Timeline
         const tl = gsap.timeline({

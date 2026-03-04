@@ -20,6 +20,27 @@
   padding: 0;
 }
 
+/* ==========================================================================
+   9. MOBILE MEDIA QUERIES (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .project-card-inner {
+    padding: 2rem;
+  }
+
+  .glass-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-preview {
+    width: 100%;
+    display: block;
+    visibility: visible;
+  }
+}
+
 html, body {
   height: 100%;
   font-family: 'Inter', sans-serif;
@@ -325,6 +346,7 @@ body {
   align-items: center; /* Center content vertically */
   box-shadow: 0 -10px 50px rgba(0,0,0,0.5); /* Shadow to separate cards */
   width: 100%;
+  margin-bottom: 0;
 }
 
 .project-card-inner {
@@ -416,6 +438,7 @@ body {
   height: 100%;
   position: relative;
   z-index: 2;
+  gap: 1.5rem;
 }
 
 .project-info-side {
@@ -424,7 +447,7 @@ body {
   flex-direction: column;
   justify-content: center;
   z-index: 2;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   position: relative;
 }
 
@@ -468,13 +491,13 @@ body {
   color: var(--col-accent);
 }
 
-.project-preview-side {
-  display: block;
-  width: 90%;
-  margin: 0 auto;
-  height: 200px;
+.project-preview {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -482,6 +505,7 @@ body {
   font-size: 1.2rem;
   position: relative;
   z-index: 1;
+  margin: 0;
 }
 
 /* Fix fixed text containers for simple transitions */
@@ -603,7 +627,7 @@ body {
 
   /* Full Screen Cards Desktop */
   .project-card-inner {
-    padding: 4rem;
+    padding: 4vw;
   }
 
   .project-top-bar {
@@ -611,43 +635,45 @@ body {
   }
 
   .project-main-content {
-    flex-direction: row;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: stretch;
   }
 
   .project-info-side {
-    width: 45%;
-    padding-right: 4rem;
+    width: auto;
+    padding-right: 0;
     margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    position: static;
+    z-index: 2;
   }
 
   .project-title {
     font-size: 3.5rem;
+    margin-bottom: 0;
   }
 
   .tech-stack {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     padding: 1rem 0;
   }
 
   .project-description {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
   }
 
-  .project-preview-side {
-    width: 55%;
-    height: 100%;
+  .project-preview {
+    width: 100%;
+    height: auto;
     margin: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: static;
     z-index: 0;
-    border-radius: 0 30px 30px 0;
-  }
-
-  /* Give the text an overlapping feel by putting it on top */
-  .project-info-side {
-    z-index: 2;
+    border-radius: 20px;
   }
 }
 
