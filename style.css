@@ -25,6 +25,7 @@ html, body {
   font-family: 'Inter', sans-serif;
   color: var(--col-text-dark);
   scroll-behavior: smooth;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -45,11 +46,8 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
+  z-index: -1;
   pointer-events: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .honeycomb-cluster {
@@ -204,10 +202,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 2rem;
   text-align: center;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
 }
 
 /* Visual Anchor: Large Central Hexagon */
@@ -285,17 +282,15 @@ body {
   display: block;
   width: 100%;
   position: relative;
+  height: auto;
 }
 
 .project-container {
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
   position: sticky;
   top: 0;
+  padding: 0;
 }
 
 .glass-card {
@@ -303,19 +298,23 @@ body {
   -webkit-backdrop-filter: blur(20px);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
 }
 
 .project-card {
   width: 100%;
+  height: 100vh;
+  position: relative;
+  border-radius: 0;
+}
+
+.project-card-inner {
   max-width: 1200px;
-  height: 85vh;
+  margin: 0 auto;
+  padding: 2rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  position: relative;
-  overflow: hidden;
+  justify-content: center;
 }
 
 /* Stack cards */
@@ -583,7 +582,7 @@ body {
   }
 
   /* Full Screen Cards Desktop */
-  .project-card {
+  .project-card-inner {
     padding: 4rem;
   }
 
