@@ -46,38 +46,18 @@ body {
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 100;
   pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Outline-only hexagon wrapper */
-.hex-bg {
-  position: absolute;
-  width: 250px;
-  /* The height of a hexagon with flat top is approx 0.866 of width */
-  aspect-ratio: 100 / 86.6;
-  clip-path: url(#rounded-hex-clip);
-  transition: transform 0.5s ease;
+.honeycomb-cluster {
+  width: 350px;
+  height: 300px;
+  opacity: 1; /* For testing, ensures it's visible */
 }
-
-.hex-bg svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* "Hive" grouping of the hexagons in the center */
-.h-1 { transform: translate(0, 0); width: 300px; }
-.h-2 { transform: translate(-150px, -130px); width: 200px; }
-.h-3 { transform: translate(150px, -130px); width: 200px; }
-.h-4 { transform: translate(-150px, 130px); width: 200px; }
-.h-5 { transform: translate(150px, 130px); width: 200px; }
 
 
 /* ==========================================================================
@@ -304,6 +284,9 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+  /* Will be pinned via JS */
+  height: 100vh;
 }
 
 .project-container {
@@ -313,6 +296,9 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  position: absolute; /* Pinned stacked container */
+  top: 0;
+  left: 0;
 }
 
 .project-card-glass {
@@ -332,6 +318,23 @@ body {
   overflow: hidden;
 }
 
+/* Stack cards */
+.stack-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 30px 30px 0;
+  overflow: hidden;
+  background: var(--col-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Stay behind fixed info initially if needed, or overlay it. Preview is on right */
+}
+
+/* We will inject structure via JS */
 .project-top-bar {
   display: flex;
   justify-content: space-between;
@@ -339,6 +342,7 @@ body {
   width: 100%;
   margin-bottom: 2rem;
   z-index: 2;
+  position: relative;
 }
 
 .project-counter {
@@ -382,7 +386,7 @@ body {
   flex-direction: column;
   height: 100%;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .project-info-side {
@@ -392,6 +396,7 @@ body {
   justify-content: center;
   z-index: 2;
   margin-bottom: 2rem;
+  position: relative;
 }
 
 .project-title {
@@ -444,10 +449,90 @@ body {
   align-items: center;
   color: rgba(255, 255, 255, 0.5);
   font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix fixed text containers for simple transitions */
+.text-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.fixed-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.fixed-text.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+.fixed-title { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+.fixed-title.active { opacity: 1; visibility: visible; position: relative; }
+.fixed-stack { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+.fixed-stack.active { opacity: 1; visibility: visible; position: relative; }
+.fixed-desc { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+.fixed-desc.active { opacity: 1; visibility: visible; position: relative; }
+.fixed-link { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+.fixed-link.active { opacity: 1; visibility: visible; position: relative; }
+
+/* The container that holds sliding cards */
+.stack-cards-container {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.stack-card {
+  position: absolute;
+  top: 100%; /* Initially pushed down */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  border-radius: 15px;
+  z-index: 1;
+}
+.stack-card:first-child {
+  top: 0; /* First card is visible */
 }
 
 /* ==========================================================================
-   7. DESKTOP MEDIA QUERIES (min-width: 768px)
+   7. ABOUT & CONTACT SECTIONS
+   ========================================================================== */
+.about-section, .contact-section {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--col-primary);
+  color: var(--col-text-light);
+  text-align: center;
+}
+.placeholder-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.placeholder-content p {
+  font-size: 1.2rem;
+  color: var(--col-text-dark);
+}
+
+/* ==========================================================================
+   8. DESKTOP MEDIA QUERIES (min-width: 768px)
    ========================================================================== */
 @media (min-width: 768px) {
 
@@ -459,6 +544,20 @@ body {
   /* Larger hero elements */
   .hero-anchor {
     width: 450px;
+  }
+
+  .stack-cards-container {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 55%;
+    border-radius: 0 30px 30px 0;
+    z-index: 0;
+  }
+
+  .stack-card {
+    border-radius: 0 30px 30px 0;
   }
 
   .hero-content h1 {
