@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         glassCard.className = 'project-card glass-card';
         // Assign strictly increasing Z-Indices: Card 1: z-index: 1, Card 2: z-index: 2, etc.
         glassCard.style.zIndex = i + 1;
+        glassCard.setAttribute('style', `z-index: ${i + 1};`);
 
         // HTML for fixed elements
         // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
@@ -155,9 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let techStackHTML = proj.stack.split(' • ').map(tech => `<span class="tech-item" style="opacity: 0;">${tech}</span>`).join(' <span class="tech-bullet" style="opacity: 0;">•</span> ');
 
         let mainContentHTML = `
-          <div class="project-main-content">
+          <div class="card-content">
             <div class="project-info-side">
-              <h3 class="project-title" style="opacity: 0; transform: translateX(-50px);">${proj.title}</h3>
+              <h2 class="project-title" style="opacity: 0; transform: translateX(-50px);">${proj.title}</h2>
               <div class="tech-stack-container" style="position: relative;">
                 <div class="tech-line tech-line-top" style="position: absolute; top: 0; left: 0; height: 1px; width: 0%; background: rgba(255, 255, 255, 0.1);"></div>
                 <div class="tech-stack" style="border: none;">${techStackHTML}</div>
@@ -166,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="project-description" style="opacity: 0; transform: translateX(-30px);">${proj.description}</p>
               <a href="${proj.link}" class="visit-site-link" style="opacity: 0; transform: translateY(20px);">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
             </div>
-            <div class="project-preview" style="opacity: 0; transform: scale(0.95);">
+            <div class="project-preview-container" style="opacity: 0; transform: scale(0.95);">
                ${proj.image}
             </div>
           </div>
@@ -189,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const techItems = card.querySelectorAll('.tech-item, .tech-bullet');
         const desc = card.querySelector('.project-description');
         const link = card.querySelector('.visit-site-link');
-        const preview = card.querySelector('.project-preview');
+        const preview = card.querySelector('.project-preview-container');
 
         // Build Entrance Timeline
         const tl = gsap.timeline({
