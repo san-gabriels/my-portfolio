@@ -40,11 +40,11 @@ body {
    3. DECORATIVE ELEMENTS (Glass Hexagons Grid)
    ========================================================================== */
 .background-grid {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
   pointer-events: none;
   display: flex;
@@ -53,8 +53,6 @@ body {
 }
 
 .honeycomb-cluster {
-  width: 350px;
-  height: 300px;
   opacity: 1; /* For testing, ensures it's visible */
 }
 
@@ -409,7 +407,7 @@ body {
 }
 
 .project-title {
-  font-size: 3.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1rem;
@@ -420,17 +418,17 @@ body {
   font-size: 0.9rem;
   letter-spacing: 2px;
   color: var(--col-text-light);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .project-description {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--col-text-dark);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   max-width: 90%;
 }
 
@@ -449,10 +447,12 @@ body {
 }
 
 .project-preview-side {
-  width: 100%;
-  height: 300px;
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  height: 200px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -600,12 +600,22 @@ body {
   }
 
   .project-title {
-    font-size: 5rem;
+    font-size: 3.5rem;
+  }
+
+  .tech-stack {
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .project-description {
+    margin-bottom: 2rem;
   }
 
   .project-preview-side {
     width: 55%;
     height: 100%;
+    margin: 0;
     position: absolute;
     right: 0;
     top: 0;

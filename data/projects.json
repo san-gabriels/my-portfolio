@@ -1,7 +1,7 @@
 [
   {
     "id": "01",
-    "total": "03",
+    "total": "04",
     "type": "PORTFOLIO WEBSITE",
     "title": "Job Tracker SaaS",
     "stack": "PYTHON • AI • VUE",
@@ -11,7 +11,7 @@
   },
   {
     "id": "02",
-    "total": "03",
+    "total": "04",
     "type": "CORPORATE WEBSITE",
     "title": "Corporate Ecosystem",
     "stack": "WORDPRESS • PHP • SCSS",
@@ -21,12 +21,22 @@
   },
   {
     "id": "03",
-    "total": "03",
+    "total": "04",
     "type": "WEB PLATFORM",
     "title": "Legacy Rescue",
     "stack": "OPTIMIZATION • JS • NODE",
     "description": "Performance optimization and code refactoring for an aging web platform.",
     "link": "#",
     "image": "Legacy Rescue Preview"
+  },
+  {
+    "id": "04",
+    "total": "04",
+    "type": "DATA ANALYTICS",
+    "title": "Data Insight Pro",
+    "stack": "PYTHON • PANDAS • D3.JS",
+    "description": "Advanced data analytics and visualization solution.",
+    "link": "#",
+    "image": "Data Insight Pro Preview"
   }
 ]

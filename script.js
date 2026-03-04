@@ -1,6 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
+  // Initialize Lenis Smooth Scrolling
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
+
+  // Get scroll value
+  lenis.on('scroll', (e) => {
+    // console.log(e);
+  });
+
+  // Keep ScrollTrigger in sync with Lenis
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+
+  gsap.ticker.lagSmoothing(0);
+
   // Hamburger Menu Logic
   const menuToggle = document.querySelector(".menu-toggle");
   const overlayMenu = document.querySelector(".overlay-menu");
@@ -74,35 +101,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Stagger organic movement for individual hexagons
     hexPaths.forEach((path, i) => {
-      // Randomize behavior:
-      // Some disappear (scale: 0)
-      // Some float left/up significantly
-      // Some expand slightly
-
       // Determine center of screen to push them apart
       const rand = Math.random();
 
-      let targetX = (Math.random() - 0.5) * 400 - window.innerWidth / 4;
-      let targetY = (Math.random() - 0.5) * 400 - window.innerHeight / 4;
-      let targetScale = 1;
-      let targetOpacity = 1;
+      let targetX = (Math.random() - 0.5) * window.innerWidth;
+      let targetY = (Math.random() - 0.5) * window.innerHeight;
+      let targetScale = 2 + Math.random() * 2; // scale up to 2x - 4x
+      let targetOpacity = 0.4 + Math.random() * 0.4;
 
-      if (rand < 0.4) {
-        // Disappear
-        targetScale = 0;
-        targetOpacity = 0;
-      } else if (rand < 0.8) {
+      if (rand < 0.3) {
+        // Float towards bottom right
+        targetX = window.innerWidth / 2 + Math.random() * 200;
+        targetY = window.innerHeight / 2 + Math.random() * 200;
+        targetScale = 1.5 + Math.random();
+      } else if (rand < 0.6) {
         // Disperse widely towards top-left (overall hive direction)
-        targetX = -window.innerWidth/2 + Math.random() * 200;
-        targetY = -window.innerHeight/2 + Math.random() * 200;
-        targetScale = 0.5 + Math.random() * 0.5;
-        targetOpacity = 0.5;
-      } else {
-        // Stay larger, float nearby
-        targetScale = 1 + Math.random() * 0.5;
-        targetX = (Math.random() - 0.5) * 200 - window.innerWidth / 4;
-        targetY = (Math.random() - 0.5) * 200 - window.innerHeight / 4;
+        targetX = -window.innerWidth / 2 + Math.random() * 200;
+        targetY = -window.innerHeight / 2 + Math.random() * 200;
+        targetScale = 2.5 + Math.random();
       }
+
+      // Initial placement: spread them out so they don't start in a box
+      gsap.set(path, {
+        x: (Math.random() - 0.5) * window.innerWidth * 0.8,
+        y: (Math.random() - 0.5) * window.innerHeight * 0.8,
+        scale: 1 + Math.random() * 1.5,
+        opacity: 0.2 + Math.random() * 0.4,
+        transformOrigin: "center center"
+      });
 
       hexTl.to(path, {
         x: targetX,
@@ -216,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Trigger on Scroll
         ScrollTrigger.create({
           trigger: card,
-          start: "top 90%", // Start when top of card is 90% down the viewport
+          start: "top 40%", // Start when top of card covers 60% of the previous card
           onEnter: () => tl.play(),
           onEnterBack: () => tl.play(), // Play again if scrolling back up
         });
@@ -229,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (nextContainer && nextContainer.classList.contains('project-container')) {
           ScrollTrigger.create({
             trigger: nextContainer,
-            start: "top 50%", // When the next card reaches the middle of the screen
+            start: "top 75%", // Exit when next card covers 25% of current card
             onEnter: () => tl.reverse(), // Animate OUT
             onLeaveBack: () => tl.play() // Animate IN when next card scrolls back down
           });
