@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Hexagon "Hive" Organic Animation
-  const honeycomb = document.querySelector('.background-grid');
+  const honeycomb = document.querySelector('#hexagon-bg');
   const hexPaths = document.querySelectorAll('.hex-path');
   if (honeycomb && hexPaths.length > 0) {
     const hexTl = gsap.timeline({
@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Create glass card
         const glassCard = document.createElement('div');
         glassCard.className = 'project-card glass-card';
+        glassCard.style.zIndex = i + 1; // Explicit stacking for card
 
         // HTML for fixed elements
         // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
