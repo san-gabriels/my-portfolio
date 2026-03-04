@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Create glass card
         const glassCard = document.createElement('div');
-        glassCard.className = 'project-card-glass';
+        glassCard.className = 'project-card glass-card';
 
         // HTML for fixed elements
         // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Initialize Project Card Animations
-      const cards = document.querySelectorAll('.project-card-glass');
+      const cards = document.querySelectorAll('.project-card');
       cards.forEach((card, index) => {
         // Find elements within this card
         const circleStroke = card.querySelector('.counter-stroke');

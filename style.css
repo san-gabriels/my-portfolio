@@ -25,7 +25,7 @@ html, body {
   font-family: 'Inter', sans-serif;
   color: var(--col-text-dark);
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,7 +45,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -298,15 +298,18 @@ body {
   top: 0;
 }
 
-.project-card-glass {
+.glass-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+}
+
+.project-card {
   width: 100%;
   max-width: 1200px;
   height: 85vh;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -580,7 +583,7 @@ body {
   }
 
   /* Full Screen Cards Desktop */
-  .project-card-glass {
+  .project-card {
     padding: 4rem;
   }
 
