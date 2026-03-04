@@ -1,0 +1,32 @@
+[
+  {
+    "id": "01",
+    "total": "03",
+    "type": "PORTFOLIO WEBSITE",
+    "title": "Job Tracker SaaS",
+    "stack": "PYTHON • AI • VUE",
+    "description": "A comprehensive dashboard for job seekers to track applications and interviews.",
+    "link": "#",
+    "image": "Job Tracker Preview"
+  },
+  {
+    "id": "02",
+    "total": "03",
+    "type": "CORPORATE WEBSITE",
+    "title": "Corporate Ecosystem",
+    "stack": "WORDPRESS • PHP • SCSS",
+    "description": "A multi-site WordPress architecture supporting complex corporate structures.",
+    "link": "#",
+    "image": "Corporate Ecosystem Preview"
+  },
+  {
+    "id": "03",
+    "total": "03",
+    "type": "WEB PLATFORM",
+    "title": "Legacy Rescue",
+    "stack": "OPTIMIZATION • JS • NODE",
+    "description": "Performance optimization and code refactoring for an aging web platform.",
+    "link": "#",
+    "image": "Legacy Rescue Preview"
+  }
+]

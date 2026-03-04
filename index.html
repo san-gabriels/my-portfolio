@@ -51,21 +51,20 @@
       <section id="home" class="hero-section">
         <!-- Background decorative hexagons (The Hive) -->
         <div class="background-grid">
-          <div class="hex-bg h-1">
-            <svg viewBox="0 0 100 86.6" preserveAspectRatio="none"><use href="#hex-stroke"></use></svg>
-          </div>
-          <div class="hex-bg h-2">
-            <svg viewBox="0 0 100 86.6" preserveAspectRatio="none"><use href="#hex-stroke"></use></svg>
-          </div>
-          <div class="hex-bg h-3">
-            <svg viewBox="0 0 100 86.6" preserveAspectRatio="none"><use href="#hex-stroke"></use></svg>
-          </div>
-          <div class="hex-bg h-4">
-            <svg viewBox="0 0 100 86.6" preserveAspectRatio="none"><use href="#hex-stroke"></use></svg>
-          </div>
-          <div class="hex-bg h-5">
-            <svg viewBox="0 0 100 86.6" preserveAspectRatio="none"><use href="#hex-stroke"></use></svg>
-          </div>
+          <svg class="honeycomb-cluster" viewBox="0 0 350 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outline only, thin stroke, matches header_reference.png -->
+            <g fill="none" stroke="var(--col-text-light)" stroke-width="1.5" stroke-opacity="0.2">
+              <path d="M 50 10 L 90 33 L 90 79 L 50 102 L 10 79 L 10 33 Z" />
+              <path d="M 100 40 L 140 63 L 140 109 L 100 132 L 60 109 L 60 63 Z" />
+              <path d="M 150 10 L 190 33 L 190 79 L 150 102 L 110 79 L 110 33 Z" />
+              <path d="M 200 40 L 240 63 L 240 109 L 200 132 L 160 109 L 160 63 Z" />
+              <path d="M 50 130 L 90 153 L 90 199 L 50 222 L 10 199 L 10 153 Z" />
+              <path d="M 100 160 L 140 183 L 140 229 L 100 252 L 60 229 L 60 183 Z" />
+              <path d="M 150 130 L 190 153 L 190 199 L 150 222 L 110 199 L 110 153 Z" />
+              <path d="M 200 160 L 240 183 L 240 229 L 200 252 L 160 229 L 160 183 Z" />
+              <path d="M 250 130 L 290 153 L 290 199 L 250 222 L 210 199 L 210 153 Z" />
+            </g>
+          </svg>
         </div>
 
         <div class="hero-content">
@@ -77,82 +76,22 @@
 
       <!-- Projects Section -->
       <section id="projects" class="projects-section">
-        <!-- Project 1 -->
-        <div class="project-container">
-          <div class="project-card-glass">
-            <div class="project-top-bar">
-              <div class="project-counter">
-                <div class="counter-circle">
-                  <span class="counter-label">PROJECT</span>
-                  <span class="counter-numbers">01 &nbsp;|&nbsp; 03</span>
-                </div>
-              </div>
-              <div class="project-type">PORTFOLIO WEBSITE</div>
-            </div>
-            <div class="project-main-content">
-              <div class="project-info-side">
-                <h3 class="project-title">Job Tracker SaaS</h3>
-                <div class="tech-stack">PYTHON &bull; AI &bull; VUE</div>
-                <p class="project-description">A comprehensive dashboard for job seekers to track applications and interviews.</p>
-                <a href="#" class="visit-site-link">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
-              </div>
-              <div class="project-preview-side">
-                <div class="preview-placeholder">Job Tracker Preview</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Content will be injected via JS -->
+      </section>
 
-        <!-- Project 2 -->
-        <div class="project-container">
-          <div class="project-card-glass">
-            <div class="project-top-bar">
-              <div class="project-counter">
-                <div class="counter-circle">
-                  <span class="counter-label">PROJECT</span>
-                  <span class="counter-numbers">02 &nbsp;|&nbsp; 03</span>
-                </div>
-              </div>
-              <div class="project-type">CORPORATE WEBSITE</div>
-            </div>
-            <div class="project-main-content">
-              <div class="project-info-side">
-                <h3 class="project-title">Corporate Ecosystem</h3>
-                <div class="tech-stack">WORDPRESS &bull; PHP &bull; SCSS</div>
-                <p class="project-description">A multi-site WordPress architecture supporting complex corporate structures.</p>
-                <a href="#" class="visit-site-link">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
-              </div>
-              <div class="project-preview-side">
-                <div class="preview-placeholder">Corporate Ecosystem Preview</div>
-              </div>
-            </div>
-          </div>
+      <!-- About Section -->
+      <section id="about" class="about-section">
+        <div class="placeholder-content">
+          <h2>About Me</h2>
+          <p>Passionate developer creating web experiences.</p>
         </div>
+      </section>
 
-        <!-- Project 3 -->
-        <div class="project-container">
-          <div class="project-card-glass">
-            <div class="project-top-bar">
-              <div class="project-counter">
-                <div class="counter-circle">
-                  <span class="counter-label">PROJECT</span>
-                  <span class="counter-numbers">03 &nbsp;|&nbsp; 03</span>
-                </div>
-              </div>
-              <div class="project-type">WEB PLATFORM</div>
-            </div>
-            <div class="project-main-content">
-              <div class="project-info-side">
-                <h3 class="project-title">Legacy Rescue</h3>
-                <div class="tech-stack">OPTIMIZATION &bull; JS &bull; NODE</div>
-                <p class="project-description">Performance optimization and code refactoring for an aging web platform.</p>
-                <a href="#" class="visit-site-link">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
-              </div>
-              <div class="project-preview-side">
-                <div class="preview-placeholder">Legacy Rescue Preview</div>
-              </div>
-            </div>
-          </div>
+      <!-- Contact Section -->
+      <section id="contact" class="contact-section">
+        <div class="placeholder-content">
+          <h2>Contact</h2>
+          <p>Let's work together.</p>
         </div>
       </section>
     </main>
