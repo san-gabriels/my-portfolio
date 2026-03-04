@@ -56,15 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const honeycomb = document.querySelector('.background-grid');
   const hexPaths = document.querySelectorAll('.hex-path');
   if (honeycomb && hexPaths.length > 0) {
-    // Pin the grid container to keep it in view
-    ScrollTrigger.create({
-      trigger: "body",
-      start: "top top",
-      end: "bottom bottom",
-      pin: honeycomb,
-      pinSpacing: false
-    });
-
     const hexTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero-section",
@@ -74,36 +65,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Stagger organic movement for individual hexagons
+    // Stagger organic movement for individual hexagons to float fully across the screen
     hexPaths.forEach((path, i) => {
-      // Determine center of screen to push them apart
-      const rand = Math.random();
-
-      let targetX = (Math.random() - 0.5) * window.innerWidth;
-      let targetY = (Math.random() - 0.5) * window.innerHeight;
-      let targetScale = 2 + Math.random() * 2; // scale up to 2x - 4x
-      let targetOpacity = 0.4 + Math.random() * 0.4;
-
-      if (rand < 0.3) {
-        // Float towards bottom right
-        targetX = window.innerWidth / 2 + Math.random() * 200;
-        targetY = window.innerHeight / 2 + Math.random() * 200;
-        targetScale = 1.5 + Math.random();
-      } else if (rand < 0.6) {
-        // Disperse widely towards top-left (overall hive direction)
-        targetX = -window.innerWidth / 2 + Math.random() * 200;
-        targetY = -window.innerHeight / 2 + Math.random() * 200;
-        targetScale = 2.5 + Math.random();
-      }
-
-      // Initial placement: spread them out so they don't start in a box
+      // Initial placement: ensure they cover the screen, not just the center
       gsap.set(path, {
-        x: (Math.random() - 0.5) * window.innerWidth * 0.8,
-        y: (Math.random() - 0.5) * window.innerHeight * 0.8,
-        scale: 1 + Math.random() * 1.5,
-        opacity: 0.2 + Math.random() * 0.4,
+        x: (Math.random() - 0.5) * window.innerWidth * 1.5,
+        y: (Math.random() - 0.5) * window.innerHeight * 1.5,
+        scale: 1 + Math.random() * 2,
+        opacity: 0.1 + Math.random() * 0.3,
         transformOrigin: "center center"
       });
+
+      // Target position: subtle floating
+      let targetX = (Math.random() - 0.5) * window.innerWidth * 2;
+      let targetY = (Math.random() - 0.5) * window.innerHeight * 2;
+      let targetScale = 1.5 + Math.random() * 3;
+      let targetOpacity = 0.3 + Math.random() * 0.4;
 
       hexTl.to(path, {
         x: targetX,
@@ -178,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
 
-        glassCard.innerHTML = topBarHTML + mainContentHTML;
+        glassCard.innerHTML = `<div class="project-card-inner">${topBarHTML}${mainContentHTML}</div>`;
         container.appendChild(glassCard);
         projectsSection.appendChild(container);
       });
