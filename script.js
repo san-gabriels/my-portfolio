@@ -50,10 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Hexagon "Hive" Animation
+  // Hexagon "Hive" Organic Animation
   const honeycomb = document.querySelector('.background-grid');
-  if (honeycomb) {
-    // Pin to top left
+  const hexPaths = document.querySelectorAll('.hex-path');
+  if (honeycomb && hexPaths.length > 0) {
+    // Pin the grid container to keep it in view
     ScrollTrigger.create({
       trigger: "body",
       start: "top top",
@@ -62,17 +63,55 @@ document.addEventListener("DOMContentLoaded", () => {
       pinSpacing: false
     });
 
-    ScrollTrigger.create({
-      trigger: ".hero-section",
-      start: "top top",
-      end: "bottom top",
-      scrub: 1,
-      animation: gsap.to(honeycomb, {
-        scale: 0.3,
-        x: () => -window.innerWidth/2 + 100,
-        y: () => -window.innerHeight/2 + 100,
-        ease: "none"
-      })
+    const hexTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1
+      }
+    });
+
+    // Stagger organic movement for individual hexagons
+    hexPaths.forEach((path, i) => {
+      // Randomize behavior:
+      // Some disappear (scale: 0)
+      // Some float left/up significantly
+      // Some expand slightly
+
+      // Determine center of screen to push them apart
+      const rand = Math.random();
+
+      let targetX = (Math.random() - 0.5) * 400 - window.innerWidth / 4;
+      let targetY = (Math.random() - 0.5) * 400 - window.innerHeight / 4;
+      let targetScale = 1;
+      let targetOpacity = 1;
+
+      if (rand < 0.4) {
+        // Disappear
+        targetScale = 0;
+        targetOpacity = 0;
+      } else if (rand < 0.8) {
+        // Disperse widely towards top-left (overall hive direction)
+        targetX = -window.innerWidth/2 + Math.random() * 200;
+        targetY = -window.innerHeight/2 + Math.random() * 200;
+        targetScale = 0.5 + Math.random() * 0.5;
+        targetOpacity = 0.5;
+      } else {
+        // Stay larger, float nearby
+        targetScale = 1 + Math.random() * 0.5;
+        targetX = (Math.random() - 0.5) * 200 - window.innerWidth / 4;
+        targetY = (Math.random() - 0.5) * 200 - window.innerHeight / 4;
+      }
+
+      hexTl.to(path, {
+        x: targetX,
+        y: targetY,
+        scale: targetScale,
+        opacity: targetOpacity,
+        transformOrigin: "center center",
+        ease: "power1.inOut"
+      }, 0);
     });
   }
 
@@ -94,31 +133,45 @@ document.addEventListener("DOMContentLoaded", () => {
         glassCard.className = 'project-card-glass';
 
         // HTML for fixed elements
+        // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
         let topBarHTML = `
           <div class="project-top-bar">
             <div class="project-counter">
               <div class="counter-circle">
-                <span class="counter-label">PROJECT</span>
-                <div class="text-container">
-                  <span class="counter-numbers">${proj.id} &nbsp;|&nbsp; ${proj.total}</span>
+                <svg class="counter-svg" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1"
+                          stroke-dasharray="308" stroke-dashoffset="308" class="counter-stroke"></circle>
+                </svg>
+                <div class="counter-content" style="opacity: 0;">
+                  <span class="counter-label">PROJECT</span>
+                  <div class="text-container">
+                    <span class="counter-numbers">${proj.id} &nbsp;|&nbsp; ${proj.total}</span>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="text-container" style="text-align: right;">
-               <div class="project-type">${proj.type}</div>
+               <div class="project-type" style="opacity: 0; transform: translateX(20px);">${proj.type}</div>
             </div>
           </div>
         `;
 
+        // Wrap tech stack items in spans for staggered animation
+        let techStackHTML = proj.stack.split(' • ').map(tech => `<span class="tech-item" style="opacity: 0;">${tech}</span>`).join(' <span class="tech-bullet" style="opacity: 0;">•</span> ');
+
         let mainContentHTML = `
           <div class="project-main-content">
             <div class="project-info-side">
-              <h3 class="project-title">${proj.title}</h3>
-              <div class="tech-stack">${proj.stack}</div>
-              <p class="project-description">${proj.description}</p>
-              <a href="${proj.link}" class="visit-site-link">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
+              <h3 class="project-title" style="opacity: 0; transform: translateX(-50px);">${proj.title}</h3>
+              <div class="tech-stack-container" style="position: relative;">
+                <div class="tech-line tech-line-top" style="position: absolute; top: 0; left: 0; height: 1px; width: 0%; background: rgba(255, 255, 255, 0.1);"></div>
+                <div class="tech-stack" style="border: none;">${techStackHTML}</div>
+                <div class="tech-line tech-line-bottom" style="position: absolute; bottom: 0; left: 0; height: 1px; width: 0%; background: rgba(255, 255, 255, 0.1);"></div>
+              </div>
+              <p class="project-description" style="opacity: 0; transform: translateX(-30px);">${proj.description}</p>
+              <a href="${proj.link}" class="visit-site-link" style="opacity: 0; transform: translateY(20px);">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
             </div>
-            <div class="project-preview-side">
+            <div class="project-preview-side" style="opacity: 0; transform: scale(0.95);">
                ${proj.image}
             </div>
           </div>
@@ -127,6 +180,60 @@ document.addEventListener("DOMContentLoaded", () => {
         glassCard.innerHTML = topBarHTML + mainContentHTML;
         container.appendChild(glassCard);
         projectsSection.appendChild(container);
+      });
+
+      // Initialize Project Card Animations
+      const cards = document.querySelectorAll('.project-card-glass');
+      cards.forEach((card, index) => {
+        // Find elements within this card
+        const circleStroke = card.querySelector('.counter-stroke');
+        const counterContent = card.querySelector('.counter-content');
+        const projType = card.querySelector('.project-type');
+        const title = card.querySelector('.project-title');
+        const techLines = card.querySelectorAll('.tech-line');
+        const techItems = card.querySelectorAll('.tech-item, .tech-bullet');
+        const desc = card.querySelector('.project-description');
+        const link = card.querySelector('.visit-site-link');
+        const preview = card.querySelector('.project-preview-side');
+
+        // Build Entrance Timeline
+        const tl = gsap.timeline({
+          paused: true,
+          defaults: { ease: "power3.out" }
+        });
+
+        // Entrance Sequence
+        tl.to(circleStroke, { strokeDashoffset: 0, duration: 1 })
+          .to(counterContent, { opacity: 1, duration: 0.5 }, "-=0.5")
+          .to(projType, { x: 0, opacity: 1, duration: 0.6 }, "-=0.4")
+          .to(title, { x: 0, opacity: 1, duration: 0.8 }, "-=0.6")
+          .to(techLines, { width: "100%", duration: 0.6 }, "-=0.6")
+          .to(techItems, { opacity: 1, duration: 0.4, stagger: 0.1 }, "-=0.4")
+          .to(desc, { x: 0, opacity: 1, duration: 0.6 }, "-=0.6")
+          .to(link, { y: 0, opacity: 1, duration: 0.6 }, "-=0.5")
+          .to(preview, { scale: 1, opacity: 1, duration: 0.8 }, "-=0.8");
+
+        // Trigger on Scroll
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 90%", // Start when top of card is 90% down the viewport
+          onEnter: () => tl.play(),
+          onEnterBack: () => tl.play(), // Play again if scrolling back up
+        });
+
+        // Exit Sequence (when next card covers this one)
+        // We find the next card container (the parent wrapper)
+        const currentContainer = card.closest('.project-container');
+        const nextContainer = currentContainer.nextElementSibling;
+
+        if (nextContainer && nextContainer.classList.contains('project-container')) {
+          ScrollTrigger.create({
+            trigger: nextContainer,
+            start: "top 50%", // When the next card reaches the middle of the screen
+            onEnter: () => tl.reverse(), // Animate OUT
+            onLeaveBack: () => tl.play() // Animate IN when next card scrolls back down
+          });
+        }
       });
     })
     .catch(error => console.error('Error loading projects:', error));
