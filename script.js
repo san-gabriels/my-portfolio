@@ -82,9 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Determine center of screen to push them apart
       const rand = Math.random();
 
-      let targetX = (Math.random() - 0.5) * 400 - window.innerWidth / 4;
-      let targetY = (Math.random() - 0.5) * 400 - window.innerHeight / 4;
-      let targetScale = 1;
+      let targetX = (Math.random() - 0.5) * window.innerWidth;
+      let targetY = (Math.random() - 0.5) * window.innerHeight;
+      let targetScale = 1.5;
       let targetOpacity = 1;
 
       if (rand < 0.4) {
@@ -93,15 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
         targetOpacity = 0;
       } else if (rand < 0.8) {
         // Disperse widely towards top-left (overall hive direction)
-        targetX = -window.innerWidth/2 + Math.random() * 200;
-        targetY = -window.innerHeight/2 + Math.random() * 200;
-        targetScale = 0.5 + Math.random() * 0.5;
+        targetX = (Math.random() - 0.5) * window.innerWidth;
+        targetY = (Math.random() - 0.5) * window.innerHeight;
+        targetScale = 1.5 * (0.5 + Math.random() * 0.5);
         targetOpacity = 0.5;
       } else {
         // Stay larger, float nearby
-        targetScale = 1 + Math.random() * 0.5;
-        targetX = (Math.random() - 0.5) * 200 - window.innerWidth / 4;
-        targetY = (Math.random() - 0.5) * 200 - window.innerHeight / 4;
+        targetScale = 1.5 * (1 + Math.random() * 0.5);
+        targetX = (Math.random() - 0.5) * window.innerWidth;
+        targetY = (Math.random() - 0.5) * window.innerHeight;
       }
 
       hexTl.to(path, {

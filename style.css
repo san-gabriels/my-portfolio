@@ -40,12 +40,12 @@ body {
    3. DECORATIVE ELEMENTS (Glass Hexagons Grid)
    ========================================================================== */
 .background-grid {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -53,8 +53,8 @@ body {
 }
 
 .honeycomb-cluster {
-  width: 350px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   opacity: 1; /* For testing, ensures it's visible */
 }
 
