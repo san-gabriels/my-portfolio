@@ -82,11 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Determine center of screen to push them apart
       const rand = Math.random();
 
-      // Enforce invisible ceiling so hexagons don't overlap the main Header Title
-      const minY = window.innerHeight * 0.35;
-
       let targetX = (Math.random() - 0.5) * window.innerWidth;
-      let targetY = minY + Math.random() * (window.innerHeight - minY);
+      let targetY = (Math.random() - 0.5) * window.innerHeight;
       let targetScale = 1.5;
       let targetOpacity = 1;
 
@@ -97,14 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (rand < 0.8) {
         // Disperse widely towards top-left (overall hive direction)
         targetX = (Math.random() - 0.5) * window.innerWidth;
-        targetY = minY + Math.random() * (window.innerHeight - minY);
+        targetY = (Math.random() - 0.5) * window.innerHeight;
         targetScale = 1.5 * (0.5 + Math.random() * 0.5);
         targetOpacity = 0.5;
       } else {
         // Stay larger, float nearby
         targetScale = 1.5 * (1 + Math.random() * 0.5);
         targetX = (Math.random() - 0.5) * window.innerWidth;
-        targetY = minY + Math.random() * (window.innerHeight - minY);
+        targetY = (Math.random() - 0.5) * window.innerHeight;
       }
 
       hexTl.to(path, {
