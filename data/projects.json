@@ -2,41 +2,41 @@
   {
     "id": "01",
     "total": "04",
-    "type": "PORTFOLIO WEBSITE",
-    "title": "Job Tracker SaaS",
-    "stack": "PYTHON • AI • VUE",
-    "description": "A comprehensive dashboard for job seekers to track applications and interviews.",
+    "type": "WEB APP",
+    "title": "Project Alpha",
+    "description": "A comprehensive web application for managing tasks and projects.",
+    "skills": ["React", "Node.js", "MongoDB"],
     "link": "#",
-    "image": "Job Tracker Preview"
+    "image_placeholder": true
   },
   {
     "id": "02",
     "total": "04",
-    "type": "CORPORATE WEBSITE",
-    "title": "Corporate Ecosystem",
-    "stack": "WORDPRESS • PHP • SCSS",
-    "description": "A multi-site WordPress architecture supporting complex corporate structures.",
+    "type": "E-COMMERCE",
+    "title": "Project Beta",
+    "description": "An e-commerce platform with a fully functional shopping cart and payment gateway.",
+    "skills": ["Vue.js", "Express", "PostgreSQL"],
     "link": "#",
-    "image": "Corporate Ecosystem Preview"
+    "image_placeholder": true
   },
   {
     "id": "03",
     "total": "04",
-    "type": "WEB PLATFORM",
-    "title": "Legacy Rescue",
-    "stack": "OPTIMIZATION • JS • NODE",
-    "description": "Performance optimization and code refactoring for an aging web platform.",
+    "type": "PORTFOLIO",
+    "title": "Project Gamma",
+    "description": "A personal portfolio website to showcase skills and past projects.",
+    "skills": ["HTML", "CSS", "JavaScript", "GSAP"],
     "link": "#",
-    "image": "Legacy Rescue Preview"
+    "image_placeholder": true
   },
   {
     "id": "04",
     "total": "04",
-    "type": "DATA ANALYTICS",
-    "title": "Data Insight Pro",
-    "stack": "PYTHON • PANDAS • D3.JS",
-    "description": "Advanced data analytics and visualization solution.",
+    "type": "DATA VISUALIZATION",
+    "title": "Project Delta",
+    "description": "An interactive data visualization tool for analyzing complex datasets.",
+    "skills": ["Python", "D3.js", "Flask"],
     "link": "#",
-    "image": "Data Insight Pro Preview"
+    "image_placeholder": true
   }
 ]

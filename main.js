@@ -1,237 +1,96 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.ticker.lagSmoothing(0);
-
-  // Hamburger Menu Logic
-  const menuToggle = document.querySelector(".menu-toggle");
-  const overlayMenu = document.querySelector(".overlay-menu");
-  const overlayLinks = document.querySelectorAll(".overlay-links li a");
-
-  let isMenuOpen = false;
-
-  // Create a timeline for the menu animation
-  // We use paused: true so we can trigger it on click
-  const menuTl = gsap.timeline({ paused: true });
-
-  // Set up animation based on screen size using matchMedia
-  let mm = gsap.matchMedia();
-
-  mm.add("(min-width: 768px)", () => {
-    // Desktop: Slide in from right
-    menuTl.clear();
-    menuTl.to(overlayMenu, { duration: 0.5, x: 0, ease: "power3.inOut" })
-          .fromTo(overlayLinks, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.1, ease: "power2.out" }, "-=0.2");
-  });
-
-  mm.add("(max-width: 767px)", () => {
-    // Mobile: Slide down from top
-    menuTl.clear();
-    menuTl.to(overlayMenu, { duration: 0.5, y: 0, ease: "power3.inOut" })
-          .fromTo(overlayLinks, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.1, ease: "power2.out" }, "-=0.2");
-  });
-
-  const toggleMenu = () => {
-    isMenuOpen = !isMenuOpen;
-    menuToggle.classList.toggle("is-active");
-    overlayMenu.classList.toggle("is-open");
-
-    if (isMenuOpen) {
-      menuTl.play();
-    } else {
-      menuTl.reverse();
+  // Hexagon Background Animation
+  gsap.to("#hex-bg svg", {
+    y: 100,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 1
     }
-  };
-
-  menuToggle.addEventListener("click", toggleMenu);
-
-  // Close menu when a link is clicked
-  overlayLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      if (isMenuOpen) toggleMenu();
-    });
   });
 
-  // Hexagon "Hive" Organic Animation
-  const honeycomb = document.querySelector('#hexagon-bg');
-  const honeycombGroup = document.querySelector('.honeycomb-cluster g');
-
-  // Dynamically generate ~20 hexagons
-  if (honeycombGroup) {
-    const numHexagons = 20;
-    const hexPathD = "M 103.9 -30.0 L 129.9 -15.0 L 129.9 15.0 L 103.9 30.0 L 77.9 15.0 L 77.9 -15.0 Z";
-    for (let i = 0; i < numHexagons; i++) {
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("class", "hex-path");
-      path.setAttribute("d", hexPathD);
-      honeycombGroup.appendChild(path);
-    }
-  }
-
-  const hexPaths = document.querySelectorAll('.hex-path');
-  if (honeycomb && hexPaths.length > 0) {
-    const hexTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1
-      }
-    });
-
-    // Stagger organic movement for individual hexagons to float fully across the screen
-    hexPaths.forEach((path, i) => {
-      // Initial placement: cluster slightly more towards center-left, with some outliers
-      const xOffset = (Math.random() - 0.8) * window.innerWidth * 1.5;
-      gsap.set(path, {
-        x: xOffset,
-        y: (Math.random() - 0.5) * window.innerHeight * 1.5,
-        scale: 1 + Math.random() * 2,
-        opacity: 0.1 + Math.random() * 0.3,
-        transformOrigin: "center center"
-      });
-
-      // Target position: subtle floating
-      let targetX = (Math.random() - 0.5) * window.innerWidth * 2;
-      let targetY = (Math.random() - 0.5) * window.innerHeight * 2;
-      let targetScale = 1.5 + Math.random() * 3;
-      let targetOpacity = 0.3 + Math.random() * 0.4;
-
-      hexTl.to(path, {
-        x: targetX,
-        y: targetY,
-        scale: targetScale,
-        opacity: targetOpacity,
-        transformOrigin: "center center",
-        ease: "power1.inOut"
-      }, 0);
-    });
-  }
-
-  // Fetch JSON and build Projects section
+  // Fetch Projects Data
   fetch('data/projects.json')
     .then(response => response.json())
-    .then(data => {
-      const projectsSection = document.getElementById('projects');
-      if (!projectsSection) return;
+    .then(projects => {
+      const projectsContainer = document.getElementById('projects');
 
-      data.forEach((proj, i) => {
-        // Create base container
-        const container = document.createElement('div');
-        container.className = 'project-container';
-        container.style.zIndex = i + 1; // Natural stacking via sticky
+      projects.forEach((project, index) => {
+        // Create Card Element
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.style.zIndex = index + 1;
 
-        // Create glass card
-        const glassCard = document.createElement('div');
-        glassCard.className = 'project-card glass-card';
-        // Assign strictly increasing Z-Indices: Card 1: z-index: 1, Card 2: z-index: 2, etc.
-        glassCard.style.zIndex = i + 1;
-        glassCard.setAttribute('style', `z-index: ${i + 1};`);
+        // Skills List HTML
+        const skillsHtml = project.skills.map(skill => `<li>${skill}</li>`).join('');
 
-        // HTML for fixed elements
-        // Circle circumference for r=49 is 2 * Math.PI * 49 = ~307.8
-        let topBarHTML = `
-          <div class="project-top-bar">
-            <div class="project-counter">
-              <div class="counter-circle">
-                <svg class="counter-svg" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1"
-                          stroke-dasharray="308" stroke-dashoffset="308" class="counter-stroke"></circle>
-                </svg>
-                <div class="counter-content" style="opacity: 0;">
-                  <span class="counter-label">PROJECT</span>
-                  <div class="text-container">
-                    <span class="counter-numbers">${proj.id} &nbsp;|&nbsp; ${proj.total}</span>
-                  </div>
-                </div>
-              </div>
+        // Card Content
+        card.innerHTML = `
+          <div class="project-card-inner">
+            <div class="card-text">
+              <div class="card-total">${project.id} / ${project.total}</div>
+              <div class="card-type">${project.type}</div>
+              <h2 class="card-title">${project.title}</h2>
+              <p class="card-description">${project.description}</p>
+              <ul class="card-skills">
+                ${skillsHtml}
+              </ul>
+              <a href="${project.link}" class="card-link">View Project</a>
             </div>
-            <div class="text-container" style="text-align: right;">
-               <div class="project-type" style="opacity: 0; transform: translateX(20px);">${proj.type}</div>
+            <div class="card-preview">
+              ${project.image_placeholder ? '<span class="preview-placeholder">Image Placeholder</span>' : ''}
             </div>
           </div>
         `;
 
-        // Wrap tech stack items in spans for staggered animation
-        let techStackHTML = proj.stack.split(' • ').map(tech => `<span class="tech-item" style="opacity: 0;">${tech}</span>`).join(' <span class="tech-bullet" style="opacity: 0;">•</span> ');
-
-        let mainContentHTML = `
-          <div class="card-content">
-            <div class="project-info-side">
-              <h2 class="project-title" style="opacity: 0; transform: translateX(-50px);">${proj.title}</h2>
-              <div class="tech-stack-container" style="position: relative;">
-                <div class="tech-line tech-line-top" style="position: absolute; top: 0; left: 0; height: 1px; width: 0%; background: rgba(255, 255, 255, 0.1);"></div>
-                <div class="tech-stack" style="border: none;">${techStackHTML}</div>
-                <div class="tech-line tech-line-bottom" style="position: absolute; bottom: 0; left: 0; height: 1px; width: 0%; background: rgba(255, 255, 255, 0.1);"></div>
-              </div>
-              <p class="project-description" style="opacity: 0; transform: translateX(-30px);">${proj.description}</p>
-              <a href="${proj.link}" class="visit-site-link" style="opacity: 0; transform: translateY(20px);">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
-            </div>
-            <div class="project-preview-container" style="opacity: 0; transform: scale(0.95);">
-               ${proj.image}
-            </div>
-          </div>
-        `;
-
-        glassCard.innerHTML = `<div class="project-card-inner">${topBarHTML}${mainContentHTML}</div>`;
-        container.appendChild(glassCard);
-        projectsSection.appendChild(container);
+        projectsContainer.appendChild(card);
       });
 
-      // Initialize Project Card Animations
-      const cards = document.querySelectorAll('.project-card');
-      cards.forEach((card, index) => {
-        // Find elements within this card
-        const circleStroke = card.querySelector('.counter-stroke');
-        const counterContent = card.querySelector('.counter-content');
-        const projType = card.querySelector('.project-type');
-        const title = card.querySelector('.project-title');
-        const techLines = card.querySelectorAll('.tech-line');
-        const techItems = card.querySelectorAll('.tech-item, .tech-bullet');
-        const desc = card.querySelector('.project-description');
-        const link = card.querySelector('.visit-site-link');
-        const preview = card.querySelector('.project-preview-container');
+      // Animate Card Contents after rendering
+      const projectCards = document.querySelectorAll('.project-card');
 
-        // Build Entrance Timeline
-        const tl = gsap.timeline({
-          paused: true,
-          defaults: { ease: "power3.out" }
-        });
+      projectCards.forEach((card) => {
+        const textElements = card.querySelectorAll('.card-title, .card-description, .card-skills, .card-link');
 
-        // Entrance Sequence
-        tl.to(circleStroke, { strokeDashoffset: 0, duration: 1 })
-          .to(counterContent, { opacity: 1, duration: 0.5 }, "-=0.5")
-          .to(projType, { x: 0, opacity: 1, duration: 0.6 }, "-=0.4")
-          .to(title, { x: 0, opacity: 1, duration: 0.8 }, "-=0.6")
-          .to(techLines, { width: "100%", duration: 0.6 }, "-=0.6")
-          .to(techItems, { opacity: 1, duration: 0.4, stagger: 0.1 }, "-=0.4")
-          .to(desc, { x: 0, opacity: 1, duration: 0.6 }, "-=0.6")
-          .to(link, { y: 0, opacity: 1, duration: 0.6 }, "-=0.5")
-          .to(preview, { scale: 1, opacity: 1, duration: 0.8 }, "-=0.8");
-
-        // Trigger on Scroll
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 40%", // Start when top of card covers 60% of the previous card
-          onEnter: () => tl.play(),
-          onEnterBack: () => tl.play(), // Play again if scrolling back up
-        });
-
-        // Exit Sequence (when next card covers this one)
-        // We find the next card container (the parent wrapper)
-        const currentContainer = card.closest('.project-container');
-        const nextContainer = currentContainer.nextElementSibling;
-
-        if (nextContainer && nextContainer.classList.contains('project-container')) {
-          ScrollTrigger.create({
-            trigger: nextContainer,
-            start: "top 75%", // Exit when next card covers 25% of current card
-            onEnter: () => tl.reverse(), // Animate OUT
-            onLeaveBack: () => tl.play() // Animate IN when next card scrolls back down
-          });
-        }
+        gsap.fromTo(textElements,
+          {
+            opacity: 0,
+            y: 20
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top center", // trigger when top of card hits center of viewport
+              toggleActions: "play reverse play reverse"
+            }
+          }
+        );
       });
     })
-    .catch(error => console.error('Error loading projects:', error));
+    .catch(error => {
+      console.error('Error fetching projects:', error);
+    });
 
+  // Hamburger Menu Logic (Basic)
+  const navToggle = document.getElementById('nav-toggle');
+  const navOverlay = document.getElementById('nav-overlay');
+
+  if (navToggle && navOverlay) {
+    navToggle.addEventListener('click', () => {
+      if (navOverlay.style.display === 'flex') {
+        navOverlay.style.display = 'none';
+      } else {
+        navOverlay.style.display = 'flex';
+      }
+    });
+  }
 });
