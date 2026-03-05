@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Determine center of screen to push them apart
       const rand = Math.random();
-      const startY = window.innerHeight * 0.15;
+      const startY = window.innerHeight * 0.30;
 
       let targetX = (Math.random() - 0.5) * window.innerWidth;
       let targetY = startY + Math.random() * (window.innerHeight - startY);
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Trigger on Scroll
         ScrollTrigger.create({
           trigger: card,
-          start: "top 90%", // Start when top of card is 90% down the viewport
+          start: "top 75%", // Start when top of card is 75% down the viewport
           onEnter: () => tl.play(),
           onEnterBack: () => tl.play(), // Play again if scrolling back up
         });
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (nextContainer && nextContainer.classList.contains('project-container')) {
           ScrollTrigger.create({
             trigger: nextContainer,
-            start: "top 50%", // When the next card reaches the middle of the screen
+            start: "top 85%", // When the next card reaches the middle of the screen
             onEnter: () => tl.reverse(), // Animate OUT
             onLeaveBack: () => tl.play() // Animate IN when next card scrolls back down
           });
