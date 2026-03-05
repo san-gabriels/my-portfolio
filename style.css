@@ -303,11 +303,12 @@ body {
   padding: 2rem;
   position: sticky;
   top: 0;
-  margin-bottom: 40vh;
+  padding-bottom: 40vh;
+  box-sizing: content-box;
 }
 
 .project-container:last-child {
-  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .project-card-glass {
