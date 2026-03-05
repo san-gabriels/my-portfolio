@@ -159,6 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Wrap tech stack items in spans for staggered animation
         let techStackHTML = proj.stack.split(' • ').map(tech => `<span class="tech-item" style="opacity: 0;">${tech}</span>`).join(' <span class="tech-bullet" style="opacity: 0;">•</span> ');
 
+        let carouselHTML = '<div class="carousel-wrapper">';
+        if (proj.images && proj.images.length > 0) {
+          proj.images.forEach((img, idx) => {
+            carouselHTML += `<img src="${img}" class="carousel-slide ${idx === 0 ? 'active' : ''}" alt="Project Preview">`;
+          });
+        }
+        carouselHTML += '</div>';
+
         let mainContentHTML = `
           <div class="project-main-content">
             <div class="project-info-side">
@@ -172,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <a href="${proj.link}" class="visit-site-link" style="opacity: 0; transform: translateY(20px);">(&nbsp;&nbsp;&nbsp;VISIT SITE &#x2197;&nbsp;&nbsp;&nbsp;)</a>
             </div>
             <div class="project-preview-side" style="opacity: 0; transform: scale(0.95);">
-               ${proj.image}
+               ${carouselHTML}
             </div>
           </div>
         `;
@@ -180,6 +188,8 @@ document.addEventListener("DOMContentLoaded", () => {
         glassCard.innerHTML = topBarHTML + mainContentHTML;
         container.appendChild(glassCard);
         projectsSection.appendChild(container);
+
+        initCarousel(glassCard);
       });
 
       // Initialize Project Card Animations
@@ -237,5 +247,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     })
     .catch(error => console.error('Error loading projects:', error));
+
+  function initCarousel(cardElement) {
+    const slides = cardElement.querySelectorAll('.carousel-slide');
+    if (slides.length > 1) {
+      let currentIndex = 0;
+      setInterval(() => {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }, 3500);
+    }
+  }
 
 });
