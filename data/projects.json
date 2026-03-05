@@ -4,29 +4,38 @@
     "total": "03",
     "type": "PORTFOLIO WEBSITE",
     "title": "Job Tracker SaaS",
-    "stack": "PYTHON • AI • VUE",
+    "stack": "PYTHON \u2022 AI \u2022 VUE",
     "description": "A comprehensive dashboard for job seekers to track applications and interviews.",
     "link": "#",
-    "image": "Job Tracker Preview"
+    "images": [
+      "assets/images/project1-1.png",
+      "assets/images/project1-2.png",
+      "assets/images/project1-3.png",
+      "assets/images/project1-4.png"
+    ]
   },
   {
     "id": "02",
     "total": "03",
     "type": "CORPORATE WEBSITE",
     "title": "Corporate Ecosystem",
-    "stack": "WORDPRESS • PHP • SCSS",
+    "stack": "WORDPRESS \u2022 PHP \u2022 SCSS",
     "description": "A multi-site WordPress architecture supporting complex corporate structures.",
     "link": "#",
-    "image": "Corporate Ecosystem Preview"
+    "images": [
+      "assets/images/project1-1.png"
+    ]
   },
   {
     "id": "03",
     "total": "03",
     "type": "WEB PLATFORM",
     "title": "Legacy Rescue",
-    "stack": "OPTIMIZATION • JS • NODE",
+    "stack": "OPTIMIZATION \u2022 JS \u2022 NODE",
     "description": "Performance optimization and code refactoring for an aging web platform.",
     "link": "#",
-    "image": "Legacy Rescue Preview"
+    "images": [
+      "assets/images/project1-1.png"
+    ]
   }
 ]
