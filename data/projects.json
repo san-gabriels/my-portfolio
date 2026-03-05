@@ -1,7 +1,7 @@
 [
   {
     "id": "01",
-    "total": "03",
+    "total": "06",
     "type": "PORTFOLIO WEBSITE",
     "title": "Job Tracker SaaS",
     "stack": "PYTHON \u2022 AI \u2022 VUE",
@@ -16,7 +16,7 @@
   },
   {
     "id": "02",
-    "total": "03",
+    "total": "06",
     "type": "CORPORATE WEBSITE",
     "title": "Corporate Ecosystem",
     "stack": "WORDPRESS \u2022 PHP \u2022 SCSS",
@@ -28,11 +28,35 @@
   },
   {
     "id": "03",
-    "total": "03",
+    "total": "06",
     "type": "WEB PLATFORM",
     "title": "Legacy Rescue",
     "stack": "OPTIMIZATION \u2022 JS \u2022 NODE",
     "description": "Performance optimization and code refactoring for an aging web platform.",
+    "link": "#",
+    "images": [
+      "assets/images/project1-1.png"
+    ]
+  },
+  {
+    "id": "05",
+    "total": "06",
+    "type": "Marketing",
+    "title": "Landing Pages",
+    "stack": "HTML \u2022 CSS \u2022 JS",
+    "description": "High-conversion landing pages for marketing campaigns.",
+    "link": "#",
+    "images": [
+      "assets/images/project1-1.png"
+    ]
+  },
+  {
+    "id": "06",
+    "total": "06",
+    "type": "Performance",
+    "title": "Core Web Vitals",
+    "stack": "PERFORMANCE \u2022 OPTIMIZATION",
+    "description": "Optimizing web applications to meet Core Web Vitals metrics.",
     "link": "#",
     "images": [
       "assets/images/project1-1.png"

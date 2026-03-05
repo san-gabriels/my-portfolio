@@ -303,11 +303,11 @@ body {
   padding: 2rem;
   position: sticky;
   top: 0;
-  padding-bottom: 40vh;
+  padding-bottom: 100vh;
   box-sizing: content-box;
 }
 
-.project-container:last-child {
+.project-container:last-of-type {
   padding-bottom: 0;
 }
 
@@ -627,6 +627,27 @@ body {
   /* Give the text an overlapping feel by putting it on top */
   .project-info-side {
     z-index: 2;
+  }
+}
+
+/* ==========================================================================
+   9. MOBILE MEDIA QUERIES (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .project-card-glass {
+    width: 90% !important;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+  }
+
+  .project-preview-side {
+    width: 100%;
+    height: 250px;
+    margin-top: 2rem;
+    border-radius: 20px;
   }
 }
 
